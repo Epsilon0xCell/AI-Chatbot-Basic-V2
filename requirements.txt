@@ -1,0 +1,3 @@
+chatterbot==1.2.11
+chatterbot-corpus
+pyyaml

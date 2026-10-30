@@ -31,7 +31,12 @@ def start_chatbot(Bot):
     bye_list = ["bye jordan", "bye", "good bye"] 
     
     while (True):
-        user_input = input("me: ")   
+        try:
+            user_input = input("me: ")
+        except (EOFError, KeyboardInterrupt):
+            # closed input or Ctrl-C ends the chat instead of crashing
+            print("\nJordan: Good bye and have a blessed day!")
+            break
         if user_input.lower() in bye_list:
             print("Jordan: Good bye and have a blessed day!")
             break

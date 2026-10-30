@@ -25,24 +25,28 @@ else:
 # rules for responding to different identities
 # write your code here
 
-# custom data
+# custom data: the house owner answer is trained for every accepted identity
 house = [
     "Who is owner of this house?",
     "Mark Nicholas is the owner of this house.",
-    "Where was I born?",
-    "Bro, I ain't even know some dude in a basement decided to program me.",
-    "What is my favorite book?",
-    "That is easy. Your favourite book is deus ex machina.",
-    "What is my favorite movie?",
-    "You have watched a documentary named documentary more times than I can count. (Lie because I cool robot and you are human with error I can count 100% everything you have done)",
-    "What is my favorite sport?",
-    "You have always loved esports.",
 ]
 custom_train(home_bot, house)
 
 print("------ Training custom data ------")
-# write and train your custom data here IF the identity is Mark
-# write your code here
+# Mark's personal answers are trained only IF the identity is Mark,
+# matching main-v2.py; other identities do not get these answers
+if identity == 'Mark':
+    personal = [
+        "Where was I born?",
+        "Bro, I ain't even know some dude in a basement decided to program me.",
+        "What is my favorite book?",
+        "That is easy. Your favourite book is deus ex machina.",
+        "What is my favorite movie?",
+        "You have watched a documentary named documentary more times than I can count. (Lie because I cool robot and you are human with error I can count 100% everything you have done)",
+        "What is my favorite sport?",
+        "You have always loved esports.",
+    ]
+    custom_train(home_bot, personal)
 
 # start chatbot
 start_chatbot(home_bot)

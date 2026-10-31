@@ -2,7 +2,7 @@
 
 # AI Chatbot Basic V2
 
-A small ChatterBot based chatbot named Jordan, built around a home storyline with an identity check at startup. Version 2 is the more developed entry point: `main-v2.py` follows the storyline more completely than `main.py`.
+A small ChatterBot based chatbot named Jordan, built around a home storyline with an identity check at startup. `main-v2.py` is the entry point to run. `main.py` is my earlier draft of the same program, kept because its personal answers are different text; it is not a second program. The section below says exactly how the two differ.
 
 ## How it works
 
@@ -15,7 +15,9 @@ Both entry points do the same basic steps, using the helpers in `functions.py`:
    - `Jane`: welcomed, and told Mark is out.
    - Anything else: `Your access is denied here.` and the program exits.
 4. Train custom storyline data with `custom_train` (see the difference between the two entry points below).
-5. Start the chat loop with `start_chatbot`. Type `bye`, `bye jordan`, or `good bye` to leave. Closing the input or pressing Ctrl-C also ends the chat cleanly with the same goodbye message.
+5. Start the chat loop with `start_chatbot`. Type `bye`, `bye jordan`, `good bye`, or `goodbye` to leave; case and spaces around the word do not matter, and an empty line is asked again instead of being sent to the bot. Closing the input or pressing Ctrl-C also ends the chat cleanly with the same goodbye message, and closing the input at the identity prompt ends the run cleanly too.
+
+Both entry points answer `--help` with a usage line and exit 0, before anything is built, so help works without ChatterBot installed. An unknown argument prints the usage line to stderr and exits 2. Running without ChatterBot installed prints `ChatterBot is not installed` with the install command to stderr and exits 1, with no traceback.
 
 ## The two entry points
 
@@ -46,6 +48,14 @@ python main.py
 ```
 
 Verified behaviour: as Mark, asking `Who is the owner of this house?` gets the trained custom answer, and `bye` ends the chat with `Jordan: Good bye and have a blessed day!`. An unknown identity is denied and the program exits before any chat starts. Corpus training runs on every start, so startup takes a while.
+
+## Tests
+
+```bash
+python3 -m unittest
+```
+
+13 tests in `test_chatbot.py`: the bye word rule, the chat loop driven by a stand-in bot, the identity prompt closing cleanly on EOF, and both entry points run as subprocesses (`--help` exits 0, an unknown argument exits 2, a missing ChatterBot exits 1 with the hint and no traceback, and importing `main.py` starts nothing). The live chat itself is not covered: it needs ChatterBot installed, and the tests run on machines without it by design.
 
 ## About the training-data folder
 

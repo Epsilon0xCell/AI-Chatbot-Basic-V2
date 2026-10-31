@@ -42,13 +42,24 @@ def custom_train(Bot, conversation):
     # Jordan to answer a question with the next question.
     trainer.train(conversation)
 
+# The words that end the chat. One list, read by the loop below and
+# by the tests, so the rule lives in exactly one place.
+BYE_WORDS = ["bye jordan", "bye", "good bye", "goodbye"]
+
+def is_quit(text):
+    # I strip and lower the input before this check, so "Bye", "BYE",
+    # and " bye" with a leading space all leave. An earlier version
+    # lowered without stripping, so a padded bye went to the bot as a
+    # normal message, and "goodbye" as one word was not in the list at
+    # all. "bye!" still does not count; punctuation is not stripped.
+    return text.strip().lower() in BYE_WORDS
+
 def start_chatbot(Bot):
     # "\033c" is a terminal clear, printed before the greeting so a chat
     # starts on an empty screen. In a pipe there is no screen, and the
     # escape bytes just land in the captured output.
     print('\033c')
     print("Hello, I am Jordan. How can I help you")
-    bye_list = ["bye jordan", "bye", "good bye"]
 
     while (True):
         try:
@@ -60,12 +71,12 @@ def start_chatbot(Bot):
             # ways out of the chat read the same.
             print("\nJordan: Good bye and have a blessed day!")
             break
-        # I lower the input before this check, so "Bye" and "BYE" leave
-        # too. I do not strip spaces, so " bye" with a leading space
-        # misses the list and goes to the bot as a normal message.
-        # "goodbye" as one word is not in the list either. The list is
-        # the whole rule for leaving, and it only names these three.
-        if user_input.lower() in bye_list:
+        # An empty line is asked again instead of being sent to the
+        # bot, where it came back with the same reply as a real failed
+        # question.
+        if not user_input.strip():
+            continue
+        if is_quit(user_input):
             print("Jordan: Good bye and have a blessed day!")
             break
 

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<!-- pages-campaign site for Epsilon0xCell/AI-Chatbot-Basic-V2; source of truth: AI-Chatbot-Basic-V2-Website/ on the default branch -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Chatbot Basic V2: knock first</title>
+<meta name="description" content="Jordan is a small ChatterBot chatbot with an identity check at the door. I built this page as that door: knock, state your name exactly, and see what the program itself would say.">
+<style>
+:root{
+  --wall:#f3ead6; --wall2:#eadfc6; --door:#1f4d3a; --door-dark:#173a2c;
+  --brass:#b98a2f; --brass-light:#e3b95a; --ink:#2b241a; --muted:#6b5f4a;
+  --panel:#fffaf0; --line:#d8c9a3; --code-bg:#1c1a17; --code-ink:#f0e6cf;
+  --denied:#8f2f23; --ok:#1f4d3a;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--wall);color:var(--ink);font-family:Georgia,'Times New Roman',serif;line-height:1.6}
+code,pre,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+a{color:var(--door)}
+a:hover{color:var(--brass)}
+header,main,footer{max-width:1060px;margin:0 auto;padding:0 5vw}
+header{padding-top:2.5rem}
+.badges{display:flex;flex-wrap:wrap;gap:.45rem;margin:1rem 0}
+.badges img{height:20px}
+.doorframe{background:var(--door);color:#f7efdb;border:6px solid var(--door-dark);border-radius:18px 18px 8px 8px;padding:2rem 2rem 1.6rem;position:relative;box-shadow:0 10px 30px rgba(43,36,26,.25)}
+.platerow{display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap}
+.plate{width:110px;height:110px;object-fit:cover;border:3px solid var(--brass);border-radius:10px;background:var(--panel)}
+h1{font-size:2.5rem;line-height:1.1;margin:.2rem 0}
+.lede{font-size:1.13rem;max-width:64ch}
+.lamp{width:22px;height:22px;border-radius:50%;background:var(--brass-light);border:2px solid var(--brass);opacity:.25;transition:opacity .8s ease;display:inline-block;vertical-align:middle;margin-right:.5rem}
+.lamp.on{opacity:1}
+.banner{width:100%;height:auto;border:2px solid var(--line);border-radius:10px;margin:1.4rem 0;background:var(--panel)}
+nav.walk{display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0 0}
+nav.walk a{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:.3rem .85rem;text-decoration:none;font-size:.95rem}
+section.room{background:var(--panel);border:1px solid var(--line);border-left:8px solid var(--door);border-radius:10px;padding:1.4rem 1.6rem;margin:1.6rem 0;opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+section.room.seen{opacity:1;transform:none}
+section.room h2{margin-top:0;color:var(--door-dark)}
+pre.code{background:var(--code-bg);color:var(--code-ink);padding:1rem 1.2rem;border-radius:10px;overflow-x:auto;font-size:.86rem;line-height:1.5;border-left:5px solid var(--brass)}
+table{border-collapse:collapse;width:100%;margin:1rem 0}
+th,td{border:1px solid var(--line);padding:.5rem .7rem;text-align:left;vertical-align:top}
+th{background:var(--wall2)}
+.intercom{border:2px solid var(--brass);border-radius:12px;padding:1.2rem;background:#fdf6e3}
+.intercom label{font-weight:bold;display:block;margin-bottom:.4rem}
+.intercom .row{display:flex;gap:.6rem;flex-wrap:wrap}
+.intercom input{flex:1;min-width:200px;padding:.6rem .8rem;border:1px solid var(--muted);border-radius:8px;font:inherit}
+.intercom button{background:var(--door);color:#fff;border:0;border-radius:8px;padding:.6rem 1.2rem;font:inherit;cursor:pointer}
+.intercom button:hover{background:var(--door-dark)}
+#reply{font-size:1.1rem;min-height:1.6em;margin:.9rem 0 0}
+#reply.denied{color:var(--denied);font-weight:bold}
+#reply.ok{color:var(--ok);font-weight:bold}
+.shots{display:grid;gap:1.2rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+figure{margin:0}
+figure img{width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:#fff}
+figcaption{font-size:.92rem;color:var(--muted);margin-top:.4rem}
+footer{padding:2rem 5vw 3rem;color:var(--muted);border-top:1px solid var(--line);margin-top:2rem}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .lamp{transition:none}
+  section.room{opacity:1;transform:none;transition:none}
+}
+</style>
+</head>
+<body>
+<!-- I made this page a front door because that is what the program is. Jordan does not start with chat. Jordan starts by asking who you are, and the answer decides whether you get inside at all. So the door comes first here too, and the rest of the page is the walk through the house in the order the program runs. -->
+<header>
+  <div class="doorframe">
+    <div class="platerow">
+      <img class="plate" src="https://raw.githubusercontent.com/Epsilon0xCell/AI-Chatbot-Basic-V2/main/logo.png" alt="Logo for AI Chatbot Basic V2, shown here as the house plate beside the door">
+      <div>
+        <p class="mono" style="margin:0"><span class="lamp" id="lamp" aria-hidden="true"></span>The doorstep light</p>
+        <h1>AI Chatbot Basic V2: knock first</h1>
+        <p style="margin:.2rem 0 0">Jordan lives here. State your name exactly, or you stay outside.</p>
+      </div>
+    </div>
+  </div>
+  <div class="badges">
+    <img src="https://img.shields.io/github/stars/Epsilon0xCell/AI-Chatbot-Basic-V2" alt="GitHub stars">
+    <img src="https://img.shields.io/github/forks/Epsilon0xCell/AI-Chatbot-Basic-V2" alt="GitHub forks">
+    <img src="https://img.shields.io/github/last-commit/Epsilon0xCell/AI-Chatbot-Basic-V2" alt="Last commit">
+    <img src="https://img.shields.io/github/languages/top/Epsilon0xCell/AI-Chatbot-Basic-V2" alt="Top language">
+    <img src="https://img.shields.io/github/repo-size/Epsilon0xCell/AI-Chatbot-Basic-V2" alt="Repository size">
+    <img src="https://img.shields.io/github/license/Epsilon0xCell/AI-Chatbot-Basic-V2" alt="License GPL-3.0">
+  </div>
+  <p class="lede">I wrote a small chatbot named Jordan with ChatterBot. Jordan uses the BestMatch logic adapter and SQL storage, and I left read_only set to False, so Jordan learns from the chats it has. Training and chat history live in a local SQLite file created in the folder you run the program from. Before any chat starts, Jordan asks for your identity and checks it exactly. That check is the whole front of this page, because it is the whole front of the program.</p>
+  <p><a href="https://github.com/Epsilon0xCell/AI-Chatbot-Basic-V2">The repo: github.com/Epsilon0xCell/AI-Chatbot-Basic-V2</a> &middot; <a href="https://github.com/Epsilon0xCell">My GitHub profile</a></p>
+  <img class="banner" src="https://raw.githubusercontent.com/Epsilon0xCell/AI-Chatbot-Basic-V2/main/banner.png" alt="Banner image for AI Chatbot Basic V2">
+  <nav class="walk" aria-label="Walk through the house">
+    <a href="#doorstep">The doorstep</a><a href="#hallway">The hallway</a><a href="#rooms">The rooms</a><a href="#way-out">The way out</a><a href="#paperwork">The paperwork</a><a href="#notes">Honest notes</a>
+  </nav>
+</header>
+<main>
+<section class="room" id="doorstep">
+  <h2>The doorstep: the identity check</h2>
+  <p>When I run <code>main-v2.py</code>, the program builds Jordan, trains the English corpus, and then prints <code>State your identity please:</code>. What I type next is compared exactly as typed, case included. Mark gets in. Jane gets in and is told Mark is out. Anyone else is denied and the program ends before any custom training or chat.</p>
+  <!-- I copied only the check into this panel on purpose. The real program also trains the corpus first and chats afterwards, and a web page cannot honestly claim to be that run. A small exact copy of the gate is true. A pretend full chat would not be. -->
+  <div class="intercom">
+    <p style="margin-top:0"><strong>The intercom.</strong> This panel is a page copy of the check in <code>main-v2.py</code>. The match is exact, case included, so <code>mark</code> with a small m is denied. The real program also trains the corpus and chats. This panel copies only the check.</p>
+    <form id="intercom-form">
+      <label for="visitor-name">State your identity please:</label>
+      <div class="row">
+        <input id="visitor-name" name="visitor-name" type="text" autocomplete="off" placeholder="Type a name, exactly">
+        <button type="submit">Ring</button>
+      </div>
+    </form>
+    <p id="reply" role="status" aria-live="polite"></p>
+  </div>
+  <p>I wrote the three outcomes out here as well, so the rule is on the page even with JavaScript off.</p>
+  <table>
+    <tr><th scope="col">You type</th><th scope="col">Jordan prints</th><th scope="col">What happens next</th></tr>
+    <tr><td><code>Mark</code></td><td>Welcome, Mark. Happy to have you at home.</td><td>Custom training runs, including Mark's personal answers, then the chat starts.</td></tr>
+    <tr><td><code>Jane</code></td><td>Mark is out right now, but you are welcome to the house.</td><td>The house owner answer is trained, then the chat starts. Mark's personal answers are not trained.</td></tr>
+    <tr><td>Anything else, including <code>mark</code></td><td>Your access is denied here.</td><td>The program returns and exits. No custom training, no chat.</td></tr>
+  </table>
+  <p>Closing the input or pressing Ctrl-C at this prompt also ends the run cleanly, with no traceback. I handle that in <code>read_identity()</code>, above the block below.</p>
+  <h3>The check itself, copied from the file</h3>
+  <p>From <code>main-v2.py</code>, lines 51 to 67 at head 3679e1a019479f1f87a4ee057acfb0f061c330e7. I show it exactly, nothing clipped.</p>
+  <!-- Code capture: main-v2.py lines 51 to 67 at head 3679e1a019479f1f87a4ee057acfb0f061c330e7, from identity = read_identity() through the denied branch ending in return 0. I copied it line for line, indent included. -->
+  <pre class="code"><code>    identity = read_identity()
+    if identity is None:
+        return 0
+
+    # Same exact match rule as main.py: "Mark" and "Jane" as typed,
+    # case included. Anything else, including "mark", is denied below.
+    if identity == "Mark":
+        print("Welcome, Mark. Happy to have you at home.")
+
+    elif identity == "Jane":
+        print("Mark is out right now, but you are welcome to the house.")
+
+    else:
+        print("Your access is denied here.")
+        # Returning here is what makes the denial real. Without it the
+        # training below would still run for a denied identity.
+        return 0</code></pre>
+  <h3>What the program says about itself</h3>
+  <p>This is real output. I ran <code>python3 main-v2.py --help</code> on 2026-10-31 at head 3679e1a019479f1f87a4ee057acfb0f061c330e7. It exited 0, and it works without ChatterBot installed because I answer help before anything is built.</p>
+  <pre class="code"><code>Usage: python main-v2.py [--help]
+Build Jordan, train the English corpus, check your
+identity, train the custom answers, then chat until a
+bye word, EOF, or Ctrl-C.</code></pre>
+</section>
+
+<section class="room" id="hallway">
+  <h2>The hallway: corpus training</h2>
+  <p>Once Jordan is built and before the identity question, I train the full English corpus with <code>train_all_data</code>. That training runs on every start, so startup takes a while. I accept that rather than tracking what was already trained, and the trained data goes into the same local SQLite file as the chat history.</p>
+  <!-- I describe the training-data folder carefully on this page because an earlier version of this site got it wrong. It showed lines from training-data/emotion.yml as if the bot trains on that folder. It does not. No code in this repo reads that folder, so I will not present its YAML as the thing Jordan learns from. -->
+  <p>One point I want plain, because this page used to get it wrong: the repo has a <code>training-data/</code> folder of English corpus YAML files, and no code in the repo reads that folder. <code>train_all_data</code> trains <code>chatterbot.corpus.english</code> from the installed chatterbot-corpus package. The folder is a local reference copy whose files match the package files. Editing a YAML file in that folder changes nothing Jordan learns.</p>
+  <p>Setup, from my README: I verified this on Python 3.12 with ChatterBot 1.2.11. Install with <code>pip install -r requirements.txt</code>, then run <code>python -m spacy download en_core_web_sm</code> as a separate step. Without that model, creating the bot fails.</p>
+  <p class="mono">$ python main-v2.py</p>
+</section>
+
+<section class="room" id="rooms">
+  <h2>The rooms: the custom answers</h2>
+  <p>After the door, I train the custom storyline answers. One answer is shared: asked who owns the house, Jordan answers that Mark Nicholas is the owner of this house. I train that pair for every accepted identity, Mark and Jane both.</p>
+  <p>Mark's personal answers are trained only when the identity is Mark: where he was born (Seattle), his favourite book (The Great Gatsby), his favourite movie (Interstellar), and his favourite sport (baseball). Jane gets the house pair and the general corpus, and nothing personal. In <code>main-v2.py</code> I train each personal pair as its own list, in its own call, so no answer is learned as the reply to the previous answer.</p>
+  <h3>How the two drafts differ</h3>
+  <table>
+    <tr><th scope="col">Point</th><th scope="col"><code>main-v2.py</code>, the one I run</th><th scope="col"><code>main.py</code>, my earlier draft</th></tr>
+    <tr><td>After the identity check</td><td>Goes straight on to custom training.</td><td>Pauses for 3 seconds after the identity replies.</td></tr>
+    <tr><td>House owner question</td><td>Trains &quot;Who is the owner of this house?&quot;, with &quot;the&quot;.</td><td>Trains the same pair without &quot;the&quot; in the question.</td></tr>
+    <tr><td>Personal answers</td><td>Seattle, The Great Gatsby, Interstellar, baseball, each pair trained in its own call.</td><td>Different jokes and choices, trained as one chained list.</td></tr>
+    <tr><td>Who gets what</td><td colspan="2">The same rule in both files now: the house owner answer for every accepted identity, the personal answers only for Mark.</td></tr>
+  </table>
+  <p>I kept <code>main.py</code> because its personal answers are different text. It is not a second program. It is the same Jordan at an earlier point in the writing.</p>
+</section>
+
+<section class="room" id="way-out">
+  <h2>The way out: the bye words</h2>
+  <p>The chat loop starts with Jordan saying hello and asking how it can help. I leave by typing one of four bye words: <code>bye</code>, <code>bye jordan</code>, <code>good bye</code>, or <code>goodbye</code>. Case and surrounding spaces are ignored for those words, which is the opposite rule from the identity check at the door, and that contrast is deliberate in my code: the gate is a name, the exit is a courtesy.</p>
+  <p>An empty line is asked again instead of being sent to the bot. Closing the input or pressing Ctrl-C ends the chat cleanly too, with the same goodbye: <code>Jordan: Good bye and have a blessed day!</code></p>
+  <p>I have 13 tests in <code>test_chatbot.py</code> covering the bye word rule, the chat loop driven by a stand-in bot, the identity prompt closing cleanly on EOF, and both entry points run as subprocesses. The live chat loop itself is untested, because it needs ChatterBot installed and my tests run on machines without it by design. I would rather say that here than let the test count imply more than it covers.</p>
+</section>
+
+<section class="room" id="paperwork">
+  <h2>The paperwork: the hand-drawn sheets</h2>
+  <p>I drew these sheets for the repo visuals folder. They are plans and maps of the program as I understand it, not screenshots of a run. I caption each one for what it actually shows.</p>
+  <div class="shots">
+    <figure>
+      <img src="https://raw.githubusercontent.com/Epsilon0xCell/AI-Chatbot-Basic-V2/main/AI-Chatbot-Basic-V2-Visuals/architecture.png" alt="Architecture diagram for AI Chatbot Basic V2 showing how the entry points, helpers, and storage fit together">
+      <figcaption>Architecture: how the entry points, the helpers in functions.py, ChatterBot, and the SQLite storage fit together.</figcaption>
+    </figure>
+    <figure>
+      <img src="https://raw.githubusercontent.com/Epsilon0xCell/AI-Chatbot-Basic-V2/main/AI-Chatbot-Basic-V2-Visuals/components.png" alt="Components diagram naming the parts of AI Chatbot Basic V2">
+      <figcaption>Components: the named parts of the program, from the bot builder to the chat loop.</figcaption>
+    </figure>
+    <figure>
+      <img src="https://raw.githubusercontent.com/Epsilon0xCell/AI-Chatbot-Basic-V2/main/AI-Chatbot-Basic-V2-Visuals/flowchart.png" alt="Flowchart of a run of AI Chatbot Basic V2, from startup through the identity check to the chat loop and exit">
+      <figcaption>Flowchart: one run in order, build, corpus training, identity check, custom training, chat, exit.</figcaption>
+    </figure>
+    <figure>
+      <img src="https://raw.githubusercontent.com/Epsilon0xCell/AI-Chatbot-Basic-V2/main/AI-Chatbot-Basic-V2-Visuals/product-map.png" alt="Product map for AI Chatbot Basic V2 setting out what the project covers">
+      <figcaption>Product map: what this small project covers, and where it stops.</figcaption>
+    </figure>
+    <figure>
+      <img src="https://raw.githubusercontent.com/Epsilon0xCell/AI-Chatbot-Basic-V2/main/AI-Chatbot-Basic-V2-Visuals/statistics.png" alt="Statistics sheet for AI Chatbot Basic V2">
+      <figcaption>Statistics: counts I recorded for the project when I made the visuals.</figcaption>
+    </figure>
+    <figure>
+      <img src="https://raw.githubusercontent.com/Epsilon0xCell/AI-Chatbot-Basic-V2/main/AI-Chatbot-Basic-V2-Visuals/schematic.png" alt="Schematic drawing of AI Chatbot Basic V2">
+      <figcaption>Schematic: the same program drawn as a circuit style plan, for readers who think that way.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="room" id="notes">
+  <h2>Honest notes</h2>
+  <ul>
+    <li>Corpus training runs on every start, so startup takes a while. I did not add a trained once flag.</li>
+    <li>Because read_only is False, Jordan learns from chats, and the SQLite file grows. Nothing in this repo prunes it.</li>
+    <li>Run the program from a different folder and you get a second, separate database there, with none of the earlier chats in it.</li>
+    <li>BestMatch is the only logic adapter I use. A question with no close match still gets whatever BestMatch rates highest, even when that match is weak.</li>
+    <li>The training-data folder is a reference copy only. See the hallway section above for the full point.</li>
+    <li>The live chat is the one part my 13 tests do not cover, for the reason given in the way out section.</li>
+  </ul>
+  <p>By Gavin K, writing as Epsilon0xCell.</p>
+</section>
+</main>
+<footer>
+  <p>Built by Epsilon0xCell</p>
+  <p>Colophon: I set this page by hand as a single HTML file, styled as the front door of Jordan's house in deep green, brass, and cream, with the intercom beside it copying only the identity check from main-v2.py. No frameworks, no external scripts.</p>
+</footer>
+<script>
+// I wrote this check by hand to match main-v2.py exactly: the same three strings, the same comparison, case included, no trimming and no lowercasing. If I ever change the replies in the program, I have to change them here too, or this panel starts lying.
+(function(){
+  var form=document.getElementById('intercom-form');
+  var input=document.getElementById('visitor-name');
+  var reply=document.getElementById('reply');
+  var lamp=document.getElementById('lamp');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var name=input.value;
+    var text='';
+    var ok=false;
+    if(name==='Mark'){ text='Welcome, Mark. Happy to have you at home.'; ok=true; }
+    else if(name==='Jane'){ text='Mark is out right now, but you are welcome to the house.'; ok=true; }
+    else { text='Your access is denied here.'; }
+    reply.textContent=text;
+    reply.className=ok?'ok':'denied';
+    // The lamp warms up when the intercom answers. It is a doorstep light, not a status code: it lights for a denial too, because the house heard you either way.
+    lamp.classList.add('on');
+  });
+  // Rooms appear in walking order as I scroll, the way a visitor meets them. With reduced motion set, the stylesheet skips this entirely and every room is simply there.
+  if('IntersectionObserver' in window){
+    var rooms=document.querySelectorAll('section.room');
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('seen'); io.unobserve(en.target); } });
+    },{threshold:0.08});
+    rooms.forEach(function(r){ io.observe(r); });
+  } else {
+    document.querySelectorAll('section.room').forEach(function(r){ r.classList.add('seen'); });
+  }
+})();
+</script>
+</body>
+</html>

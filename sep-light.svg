@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 40" width="400" height="40" role="img" aria-label="Twin owl eyes on a short brick rule, light separator">
+<line x1="0" y1="20" x2="400" y2="20" stroke="#a0522d" stroke-width="2"/>
+<g name="owl-eyes" fill="#eee6c8">
+  <ellipse cx="182" cy="20" rx="8" ry="8"><animate attributeName="ry" values="8;8;0.7;8;8" keyTimes="0;0.78;0.82;0.86;1" dur="18s" repeatCount="indefinite"/></ellipse>
+  <ellipse cx="218" cy="20" rx="8" ry="8"><animate attributeName="ry" values="8;8;0.7;8;8" keyTimes="0;0.78;0.82;0.86;1" dur="18s" repeatCount="indefinite"/></ellipse>
+</g>
+<circle cx="182" cy="20" r="2.8" fill="#2a2145"/><circle cx="218" cy="20" r="2.8" fill="#2a2145"/>
+</svg>

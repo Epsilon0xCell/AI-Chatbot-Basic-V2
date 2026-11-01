@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 280" width="1200" height="280" role="img" aria-label="Heath strata: owl eyes in the treeline, a nightjar hopping and churring, lanterns along a path">
+<rect width="1200" height="280" fill="#2a2145"/>
+<!-- top stratum: treeline with owl eyes waxing dot by dot, and a ditch cat -->
+<rect x="0" y="0" width="1200" height="86" fill="#14201f"/>
+<g name="owl-eyes" fill="#eee6c8">
+  <circle cx="240" cy="40" r="4"><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.2;0.8;1" dur="17s" repeatCount="indefinite"/></circle>
+  <circle cx="262" cy="40" r="4"><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.2;0.8;1" dur="17s" repeatCount="indefinite"/></circle>
+  <circle cx="620" cy="30" r="4"><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.35;0.85;1" dur="21s" begin="4s" repeatCount="indefinite"/></circle>
+  <circle cx="642" cy="30" r="4"><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.35;0.85;1" dur="21s" begin="4s" repeatCount="indefinite"/></circle>
+  <circle cx="1010" cy="46" r="4"><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.25;0.75;1" dur="19s" begin="8s" repeatCount="indefinite"/></circle>
+  <circle cx="1032" cy="46" r="4"><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.25;0.75;1" dur="19s" begin="8s" repeatCount="indefinite"/></circle>
+</g>
+<g name="ditch-cat" transform="translate(420 66)" fill="#0d0b18">
+  <ellipse cx="0" cy="8" rx="34" ry="12"/><ellipse cx="24" cy="0" rx="13" ry="11"/><polygon points="16,-7 19,-16 25,-8"/>
+  <circle name="one-blink" cx="28" cy="-1" r="1.8" fill="#eee6c8"><animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.62;0.65;0.68;1" dur="34s" repeatCount="indefinite"/></circle>
+</g>
+<!-- middle stratum: nightjar hopping low, stopping, throat rippling; bells twinkle when it halts -->
+<g name="nightjar-hops">
+  <animateTransform attributeName="transform" type="translate" values="0 0;120 -8;120 0;120 0;300 -8;300 0;300 0;0 0" keyTimes="0;0.14;0.2;0.44;0.58;0.64;0.9;1" dur="24s" repeatCount="indefinite"/>
+  <g transform="translate(180 148)">
+    <polygon points="30,-2 168,10 166,22 26,10" fill="#171310"/>
+    <ellipse cx="0" cy="0" rx="86" ry="26" fill="#241d1a"/>
+    <g fill="#6a5c46"><ellipse cx="-40" cy="-8" rx="8" ry="3"/><ellipse cx="-6" cy="6" rx="9" ry="3"/><ellipse cx="26" cy="-10" rx="8" ry="3"/><ellipse cx="52" cy="8" rx="7" ry="3"/><ellipse cx="-58" cy="8" rx="7" ry="3"/></g>
+    <path d="M-52 -12 Q 0 6 48 -12" stroke="#b9bec6" stroke-width="3" fill="none"/>
+    <ellipse cx="-84" cy="-12" rx="24" ry="16" fill="#241d1a"/>
+    <circle cx="-92" cy="-15" r="4.6" fill="#eee6c8"/><circle cx="-92" cy="-15" r="2" fill="#0d0b18"/>
+    <g name="throat-ripples" fill="none" stroke="#a89ec2" stroke-width="1.8">
+      <circle cx="-112" cy="-10" r="8"><animate attributeName="r" values="6;26" dur="24s" keyTimes="0;0.12" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0" dur="24s" keyTimes="0;0.12" repeatCount="indefinite"/></circle>
+      <circle cx="-112" cy="-10" r="8"><animate attributeName="r" values="6;26" dur="24s" keyTimes="0.44;0.56" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.9;0" keyTimes="0.44;0.47;0.56" repeatCount="indefinite"/></circle>
+    </g>
+  </g>
+</g>
+<g name="shaken-bells" fill="#c9a44a">
+  <circle cx="330" cy="118" r="2.6"><animate attributeName="opacity" values="0;1;0;0" keyTimes="0;0.05;0.14;1" dur="24s" repeatCount="indefinite"/></circle>
+  <circle cx="560" cy="104" r="2.2"><animate attributeName="opacity" values="0;1;0;0" keyTimes="0.44;0.5;0.58;1" dur="24s" repeatCount="indefinite"/></circle>
+  <circle cx="470" cy="128" r="2"><animate attributeName="opacity" values="0;1;0;0" keyTimes="0.44;0.5;0.58;1" dur="24s" repeatCount="indefinite"/></circle>
+</g>
+<!-- bottom stratum: heather fringe and path lanterns going out far to near, then relighting -->
+<path name="heather-fringe" d="M0 280 L0 238 L28 226 L44 244 L74 224 L96 246 L128 228 L150 248 L184 226 L206 244 L240 230 L262 250 L296 228 L318 246 L352 232 L374 252 L408 230 L430 248 L464 234 L486 254 L520 232 L542 250 L576 236 L598 254 L632 234 L654 252 L688 238 L710 256 L744 236 L766 254 L800 240 L822 258 L856 238 L878 256 L912 242 L934 258 L968 240 L990 258 L1024 244 L1046 260 L1080 242 L1102 260 L1136 246 L1158 262 L1200 246 L1200 280 Z" fill="#17302e"/>
+<g name="path-lanterns" fill="#eee6c8">
+  <circle cx="180" cy="238" r="5"><animate attributeName="opacity" values="1;1;0.1;0.1;1;1" keyTimes="0;0.3;0.36;0.62;0.7;1" dur="16s" repeatCount="indefinite"/></circle>
+  <circle cx="430" cy="228" r="5"><animate attributeName="opacity" values="1;1;0.1;0.1;1;1" keyTimes="0;0.38;0.44;0.66;0.74;1" dur="16s" repeatCount="indefinite"/></circle>
+  <circle cx="690" cy="238" r="5"><animate attributeName="opacity" values="1;1;0.1;0.1;1;1" keyTimes="0;0.46;0.52;0.7;0.78;1" dur="16s" repeatCount="indefinite"/></circle>
+  <circle cx="950" cy="230" r="5"><animate attributeName="opacity" values="1;1;0.1;0.1;1;1" keyTimes="0;0.54;0.6;0.74;0.82;1" dur="16s" repeatCount="indefinite"/></circle>
+</g>
+</svg>
